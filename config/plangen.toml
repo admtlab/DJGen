@@ -1,0 +1,63 @@
+[project]
+name = "Synthetic Plan Generator"
+output_dir = "output"
+
+[[iterations]]
+name = "plangen"
+
+[iterations.datagen]
+relations = [
+  { name = "rel0", num_rows = 100, attributes = [
+    { name = "attr0" },
+    { name = "attr1" },
+    { name = "attr2" },
+    { name = "attr3" },
+    { name = "attr4" },
+    { name = "attr5" },
+  ] },
+  { name = "rel1", num_rows = 100, attributes = [
+    { name = "attr0" },
+    { name = "attr1" },
+    { name = "attr2" },
+    { name = "attr3" },
+    { name = "attr4" },
+    { name = "attr5" },
+  ] },
+  { name = "rel2", num_rows = 100, attributes = [
+    { name = "attr0" },
+    { name = "attr1" },
+    { name = "attr2" },
+    { name = "attr3" },
+    { name = "attr4" },
+    { name = "attr5" },
+  ] },
+  { name = "rel3", num_rows = 100, attributes = [
+    { name = "attr0" },
+    { name = "attr1" },
+    { name = "attr2" },
+    { name = "attr3" },
+    { name = "attr4" },
+    { name = "attr5" },
+  ] },
+  { name = "rel4", num_rows = 100, attributes = [
+    { name = "attr0" },
+    { name = "attr1" },
+    { name = "attr2" },
+    { name = "attr3" },
+    { name = "attr4" },
+    { name = "attr5" },
+  ] },
+]
+
+[iterations.plangen]
+visualize = true
+visualization_format = "png"
+base_plans = [
+  { pattern = "linear", num_plans = 1, permutations = true },
+  { pattern = "cyclic", num_plans = 1, permutations = true },
+  { pattern = "star", num_plans = 1, permutations = true },
+  { pattern = "random", num_plans = 1, permutations = true },
+]
+
+[iterations.analysis]
+enabled = true
