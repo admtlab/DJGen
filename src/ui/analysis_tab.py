@@ -71,7 +71,9 @@ def _render_plan_comparison_controls(
     if analysis_was_run:
         best_binary, best_nary = get_best_plans_by_type(filtered_plans, sort_by)
         can_select_best = best_binary is not None and best_nary is not None
-        if st.button("Select Best Plans", disabled=not can_select_best, type="secondary"):
+        if st.button(
+            "Select Best Plans", disabled=not can_select_best, type="secondary"
+        ):
             if best_binary and best_nary:
                 st.session_state.plan_select_left = best_binary.get_display_name()
                 st.session_state.plan_select_right = best_nary.get_display_name()
@@ -95,11 +97,17 @@ def _render_plan_comparison_controls(
     left_name = st.session_state.plan_select_left
     right_name = st.session_state.plan_select_right
 
-    left_plan = next((p for p in filtered_plans if p.get_display_name() == left_name), None)
-    right_plan = next((p for p in filtered_plans if p.get_display_name() == right_name), None)
+    left_plan = next(
+        (p for p in filtered_plans if p.get_display_name() == left_name), None
+    )
+    right_plan = next(
+        (p for p in filtered_plans if p.get_display_name() == right_name), None
+    )
 
-    if not left_plan: left_plan = filtered_plans[0]
-    if not right_plan: right_plan = filtered_plans[-1]
+    if not left_plan:
+        left_plan = filtered_plans[0]
+    if not right_plan:
+        right_plan = filtered_plans[-1]
 
     return left_plan, right_plan
 
@@ -237,7 +245,7 @@ def render_downloads_section(output_dir: str):
         st.download_button(
             label="Download All Data (ZIP)",
             data=zip_data,
-            file_name="djp_complete_dataset.zip",
+            file_name="djgen_complete_dataset.zip",
             mime="application/zip",
         )
     else:

@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Set, Tuple
 import dask.dataframe as dd
 from dask.dataframe import DataFrame
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 
 def _get_used_attrs_from_plan(

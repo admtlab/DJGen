@@ -17,7 +17,7 @@ from src.visualization import create_visualizations_for_plans
 from src.utils.toml_parser import get_default_config
 
 CONFIG = {
-    "temp_prefix": "djp_web_",
+    "temp_prefix": "djgen_web_",
     "iteration_name": "web_generated",
     "seed": None,
     "patterns": ["star", "linear", "cyclic", "random", "custom"],
@@ -390,7 +390,7 @@ def create_project_config(
     }
 
 
-def run_djp_generator(config_dict: Dict[str, Any]) -> Optional[str]:
+def run_djgen(config_dict: Dict[str, Any]) -> Optional[str]:
     temp_dir = tempfile.mkdtemp(prefix=CONFIG["temp_prefix"])
     config_dict["project"]["output_dir"] = temp_dir
 

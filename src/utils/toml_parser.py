@@ -4,7 +4,7 @@ import tomllib
 from typing import Any, Dict
 
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 
 def get_default_config() -> Dict[str, Any]:

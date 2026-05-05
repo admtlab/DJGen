@@ -1,6 +1,7 @@
 """
-Streamlined UI for the DJP Generator.
+Streamlined UI for the DJGen.
 
 Usage:
     uv run python -m streamlit run src/ui/main.py
 """
+

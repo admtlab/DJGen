@@ -1,4 +1,5 @@
 import os
+import base64
 from typing import List, Dict, Any, Tuple, Optional
 
 import streamlit as st
@@ -9,7 +10,7 @@ from src.ui.models import (
     VALIDATION_RULES,
     PlanMetadata,
     create_project_config,
-    run_djp_generator,
+    run_djgen,
     load_plans,
     create_toml_string_from_config,
     update_session_state_from_toml,
@@ -30,7 +31,7 @@ from src.ui.utils import (
 
 def render_sidebar() -> Dict[str, Any]:
     """Main sidebar orchestrator with clean separation of concerns"""
-    st.sidebar.title("DJP Generator Configuration")
+    st.sidebar.title("DJGen Configuration")
 
     project_name, seed = _render_project_settings()
     advanced_mode, rels = _render_mode_and_relations()
@@ -74,10 +75,20 @@ def render_main_content(config: Dict[str, Any]) -> None:
 # ==============================================================================
 
 
+def _get_base64_image(image_path: str) -> str:
+    """Convert image file to base64 string."""
+    try:
+        with open(image_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except FileNotFoundError:
+        return ""
+
+
 def _render_welcome_content() -> None:
     """Render the welcome/landing page content"""
     st.markdown("""
-    # Data & Join Plan Generator
+    # DJGen: Data & Conjunctive Join Plan Generator
 
     **Generate and then analyze synthetic datasets and conjunctive join plans**
 
@@ -89,6 +100,58 @@ def _render_welcome_content() -> None:
 
     Use **Simple Mode** for quick setup or **Advanced Mode** for detailed control.
     """)
+
+    st.divider()
+
+    _, col1, col2, col3, _ = st.columns([1, 1, 1, 1, 1])
+
+    # Get base64 encoded images
+    admt_b64 = _get_base64_image("src/ui/assets/admt.svg")
+    pitt_b64 = _get_base64_image("src/ui/assets/pitt.png")
+    nih_b64 = _get_base64_image("src/ui/assets/nih.png")
+
+    with col1:
+        if admt_b64:
+            st.html(f"""
+            <div style="background-color: #e8e8e8; border-radius: 10px; padding: 15px; text-align: center; margin: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;">
+                <a href="https://db.cs.pitt.edu" target="_blank" style="text-decoration: none;">
+                    <img src="data:image/svg+xml;base64,{admt_b64}" width="200" style="max-width: 100%;">
+                </a>
+            </div>
+            """)
+        else:
+            st.image("src/ui/assets/admt.svg", width=200)
+
+    with col2:
+        if pitt_b64:
+            st.html(f"""
+            <div style="background-color: #e8e8e8; border-radius: 10px; padding: 15px; text-align: center; margin: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;">
+                <a href="https://pitt.edu" target="_blank" style="text-decoration: none;">
+                    <img src="data:image/png;base64,{pitt_b64}" width="200" style="max-width: 100%;">
+                </a>
+            </div>
+            """)
+        else:
+            st.image("src/ui/assets/pitt.png", width=200)
+
+    with col3:
+        if nih_b64:
+            st.html(f"""
+            <div style="background-color: #e8e8e8; border-radius: 10px; padding: 15px; text-align: center; margin: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;">
+                <a href="https://nih.gov" target="_blank" style="text-decoration: none;">
+                    <img src="data:image/png;base64,{nih_b64}" width="200" style="max-width: 100%;">
+                </a>
+                <div style="margin-top: 8px; font-size: 1rem; color: #666; font-weight: bold; word-wrap: break-word; max-width: 100%;">
+                    R01HL159805
+                </div>
+            </div>
+            """)
+        else:
+            st.image("src/ui/assets/nih.png", width=200)
+            st.markdown(
+                "<div style='text-align: center; font-size: 1rem; color: #666; font-weight: bold;'>R01HL159805</div>",
+                unsafe_allow_html=True,
+            )
 
 
 def _render_analysis_in_progress() -> None:
@@ -759,7 +822,7 @@ def _handle_analysis_execution(config: Dict[str, Any]) -> None:
             config["pattern_settings"],
         )
 
-        output_dir = run_djp_generator(config_dict)
+        output_dir = run_djgen(config_dict)
 
         if output_dir:
             st.session_state.update(

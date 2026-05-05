@@ -8,7 +8,7 @@ from typing import List, Dict, Any, Tuple, Optional, Set
 
 from src.plangen import patterns
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 PATTERN_FUNCTIONS = {
     "linear": patterns.create_linear_plan,

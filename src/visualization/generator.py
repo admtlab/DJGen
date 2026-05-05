@@ -6,7 +6,7 @@ from typing import List, Dict, Any, Optional, Tuple
 
 from graphviz import Digraph
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 # Color scheme constants
 FILL_COLOR = "#DBEEFF"

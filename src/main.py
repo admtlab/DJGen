@@ -13,7 +13,7 @@ from src.plangen import generate_join_plans_for_iteration
 from src.analysis import generate_analysis_for_iteration
 from src.visualization import create_visualizations_for_plans
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 
 def setup_logging(verbose: bool = False) -> None:

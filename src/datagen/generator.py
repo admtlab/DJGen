@@ -8,7 +8,7 @@ import numpy as np
 
 from src.datagen import distributions
 
-logger = logging.getLogger("djp")
+logger = logging.getLogger("djgen")
 
 DISTRIBUTION_FUNCTIONS = {
     "sequential": distributions.generate_sequential_attribute,
